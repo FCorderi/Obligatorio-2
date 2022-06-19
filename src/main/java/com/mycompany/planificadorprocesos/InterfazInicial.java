@@ -4,8 +4,6 @@
  */
 package com.mycompany.planificadorprocesos;
 
-import java.util.LinkedList;
-import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -80,7 +78,7 @@ public class InterfazInicial extends javax.swing.JFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Double.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -102,6 +100,8 @@ public class InterfazInicial extends javax.swing.JFrame {
                 botonIniciarActionPerformed(evt);
             }
         });
+
+        quantum.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
 
         jLabel8.setText("Ingresar Quantum");
 
@@ -248,12 +248,6 @@ public class InterfazInicial extends javax.swing.JFrame {
             String.valueOf(proceso.Prioridad),};
         dt.addRow(datos);
 
-        if (tablaProcesos.getRowCount() > fila) {
-            fila++;
-        } else {
-            fila = 0;
-        }
-
         Nodo nodo = new Nodo(proceso.ID, proceso);
         if (proceso.Tipo.equals("SO")) {
             colaProcesos1.insertarOrdenado(nodo);
@@ -267,8 +261,11 @@ public class InterfazInicial extends javax.swing.JFrame {
     }//GEN-LAST:event_botonAñadirActionPerformed
 
     private void botonIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonIniciarActionPerformed
-        new InterfazInformacion().setVisible(true);
+        Quantum = Integer.parseInt(quantum.getValue().toString());
+        InterfazInformacion interfaz = new InterfazInformacion(Quantum, colaProcesos1, colaProcesos2, colaProcesos3, colaProcesos4);
+        interfaz.setVisible(true);
         this.setVisible(false);
+        interfaz.loop();
     }//GEN-LAST:event_botonIniciarActionPerformed
 
     private void tipoProcesoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tipoProcesoActionPerformed
@@ -309,19 +306,17 @@ public class InterfazInicial extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new InterfazInicial().setVisible(true);
+                //new InterfazInicial().setVisible(true);
             }
         });
     }
 
-    Lista<Proceso> colaProcesos1;
-    Lista<Proceso> colaProcesos2;
-    Lista<Proceso> colaProcesos3;
-    Lista<Proceso> colaProcesos4;
-    Lista<Proceso> procesosFinalizados;
-    Lista<Proceso> procesosBloqueados;
+    Lista<Proceso> colaProcesos1 = new Lista();
+    Lista<Proceso> colaProcesos2 = new Lista();
+    Lista<Proceso> colaProcesos3 = new Lista();
+    Lista<Proceso> colaProcesos4 = new Lista();
     int idProceso = 0;
-    private int fila = 0;
+    int Quantum;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAñadir;
     private javax.swing.JButton botonAñadirVarios;

@@ -1,10 +1,11 @@
 package com.mycompany.planificadorprocesos;
 
+import javax.swing.table.DefaultTableModel;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 /**
  *
  * @author Felipe
@@ -14,6 +15,15 @@ public class InterfazInformacion extends javax.swing.JFrame {
     /**
      * Creates new form IntefazInformacion
      */
+    public InterfazInformacion(int quantum, Lista<Proceso> lista1, Lista<Proceso> lista2, Lista<Proceso> lista3, Lista<Proceso> lista4) {
+        initComponents();
+        listaP1 = lista1;
+        listaP2 = lista2;
+        listaP3 = lista3;
+        listaP4 = lista4;
+        Quantum = quantum;
+    }
+
     public InterfazInformacion() {
         initComponents();
     }
@@ -94,7 +104,7 @@ public class InterfazInformacion extends javax.swing.JFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -112,7 +122,7 @@ public class InterfazInformacion extends javax.swing.JFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -130,7 +140,7 @@ public class InterfazInformacion extends javax.swing.JFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -312,12 +322,110 @@ public class InterfazInformacion extends javax.swing.JFrame {
 
     private void cambiarPrioridadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cambiarPrioridadActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_cambiarPrioridadActionPerformed
 
     private void bloquearProcesoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bloquearProcesoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_bloquearProcesoActionPerformed
+
+    public void loop() {
+        Planificadores planificador = new Planificadores(Quantum, listaP1, listaP2, listaP3, listaP4, procesosFinalizados, procesosBloqueados);
+        while ((!listaP1.esVacia()) || (!procesosBloqueados.esVacia())) {
+            Proceso p = planificador.evenDriven(listaP1);
+            procesoEjecucionId.setText(String.valueOf(p.ID));
+            procesoTR.setText(String.valueOf(p.Duracion));
+            colaEjecucion.setText("Cola 1 (procesos del sistema)");
+
+            Nodo<Proceso> actual = listaP1.getPrimero();
+            if (actual != null) {
+                DefaultTableModel dt1 = (DefaultTableModel) tablaListos.getModel();
+                String[] datos = {
+                    String.valueOf(actual.getDato().ID),
+                    actual.getDato().Tipo,
+                    String.valueOf(actual.getDato().Prioridad),};
+                dt1.addRow(datos);
+                while (actual.getSiguiente() != null) {
+                    actual = actual.getSiguiente();
+                    datos[0] = String.valueOf(actual.getDato().ID);
+                    datos[1] = actual.getDato().Tipo;
+                    datos[2] = String.valueOf(actual.getDato().Prioridad);
+                    dt1.addRow(datos);
+                }
+            }
+
+            actual = procesosBloqueados.getPrimero();
+            if (actual != null) {
+                DefaultTableModel dt2 = (DefaultTableModel) tablaListos.getModel();
+                String[] datos = {
+                    String.valueOf(actual.getDato().ID),
+                    String.valueOf(actual.getDato().DuracionES),
+                    String.valueOf(actual.getDato().Prioridad),};
+                dt2.addRow(datos);
+                while (actual.getSiguiente() != null) {
+                    actual = actual.getSiguiente();
+                    datos[0] = String.valueOf(actual.getDato().ID);
+                    datos[1] = String.valueOf(actual.getDato().DuracionES);
+                    datos[2] = String.valueOf(actual.getDato().Prioridad);
+                    dt2.addRow(datos);
+                }
+            }
+
+            actual = procesosBloqueados.getPrimero();
+            if (actual != null) {
+                DefaultTableModel dt3 = (DefaultTableModel) tablaListos.getModel();
+                String[] datos2 = {
+                    String.valueOf(actual.getDato().ID),
+                    actual.getDato().Tipo,};
+                dt3.addRow(datos2);
+                while (actual.getSiguiente() != null) {
+                    actual = actual.getSiguiente();
+                    datos2[0] = String.valueOf(actual.getDato().ID);
+                    datos2[1] = String.valueOf(actual.getDato().Tipo);
+                    dt3.addRow(datos2);
+                }
+            }
+
+            /*
+            DefaultTableModel dt = (DefaultTableModel) tablaListos.getModel();
+            String[] datos = {
+                String.valueOf(p.ID),
+                p.Tipo,
+                String.valueOf(p.Duracion),
+                String.valueOf(p.TEntreES),
+                String.valueOf(p.DuracionES),
+                String.valueOf(p.Prioridad),};
+            dt.addRow(datos);
+             */
+            try {
+                Thread.sleep(1000);
+            } catch (Exception e) {
+            }
+        }
+        /*
+        while ((!listaP2.esVacia()) || (!procesosBloqueados.esVacia())) {
+            planificador.roundRobin(listaP2, 2);
+            try {
+                Thread.sleep(1000);
+            } catch (Exception e) {
+            }
+        }
+        while ((!listaP3.esVacia()) || (!procesosBloqueados.esVacia())) {
+            planificador.roundRobin(listaP3, 3);
+            try {
+                Thread.sleep(1000);
+            } catch (Exception e) {
+            }
+        }
+        while ((!listaP4.esVacia()) || (!procesosBloqueados.esVacia())) {
+            planificador.firstComeFirstServed(listaP4);
+            try {
+                Thread.sleep(1000);
+            } catch (Exception e) {
+            }
+        }
+        */
+    }
 
     /**
      * @param args the command line arguments
@@ -354,7 +462,13 @@ public class InterfazInformacion extends javax.swing.JFrame {
             }
         });
     }
-
+    Lista<Proceso> listaP1;
+    Lista<Proceso> listaP2;
+    Lista<Proceso> listaP3;
+    Lista<Proceso> listaP4;
+    Lista<Proceso> procesosFinalizados = new Lista();
+    Lista<Proceso> procesosBloqueados = new Lista();
+    int Quantum;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bloquearProceso;
     private javax.swing.JSpinner bloquearProcesoId;
