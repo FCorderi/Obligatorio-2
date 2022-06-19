@@ -33,34 +33,46 @@ public class Lista<Proceso> implements ILista<Proceso> {
 
     public void contadorDesbloqueoOrdenado(Lista<Proceso> lista, Lista<Proceso> listaAux) {
         Nodo<Proceso> aux = null;
-        Nodo<Proceso> actual = primero;
-        actual.getDato().DuracionES--;
-        while (actual.getSiguiente() != null) {
-            actual = actual.getSiguiente();
-            actual.getDato().DuracionES--;
-            if (actual.getDato().DuracionES == 0) {
-                aux = listaAux.buscar(actual.getDato().ID);
-                actual.getDato().TEntreES = aux.getDato().TEntreES;
-                actual.getDato().DuracionES = aux.getDato().DuracionES;
-                lista.insertarOrdenado(actual);
-                this.eliminar(actual.getDato().ID);
+        if (primero != null) {
+            Nodo<Proceso> actual = primero;
+            if (actual.getDato().DuracionES > 0) {
+                actual.getDato().DuracionES--;
+            }
+            while (actual.getSiguiente() != null) {
+                actual = actual.getSiguiente();
+                if (actual.getDato().DuracionES > 0) {
+                    actual.getDato().DuracionES--;
+                }
+                if (actual.getDato().DuracionES == 0) {
+                    aux = listaAux.buscar(actual.getDato().ID);
+                    actual.getDato().TEntreES = aux.getDato().TEntreES;
+                    actual.getDato().DuracionES = aux.getDato().DuracionES;
+                    lista.insertarOrdenado(actual);
+                    this.eliminar(actual.getDato().ID);
+                }
             }
         }
     }
 
     public void contadorDesbloqueoDesordenado(Lista<Proceso> lista, Lista<Proceso> listaAux) {
         Nodo<Proceso> aux = null;
-        Nodo<Proceso> actual = primero;
-        actual.getDato().DuracionES--;
-        while (actual.getSiguiente() != null) {
-            actual = actual.getSiguiente();
-            actual.getDato().DuracionES--;
-            if (actual.getDato().DuracionES == 0) {
-                aux = listaAux.buscar(actual.getDato().ID);
-                actual.getDato().TEntreES = aux.getDato().TEntreES;
-                actual.getDato().DuracionES = aux.getDato().DuracionES;
-                lista.insertar(actual);
-                this.eliminar(actual.getDato().ID);
+        if (primero != null) {
+            Nodo<Proceso> actual = primero;
+            if (actual.getDato().DuracionES > 0) {
+                actual.getDato().DuracionES--;
+            }
+            while (actual.getSiguiente() != null) {
+                actual = actual.getSiguiente();
+                if (actual.getDato().DuracionES > 0) {
+                    actual.getDato().DuracionES--;
+                }
+                if (actual.getDato().DuracionES == 0) {
+                    aux = listaAux.buscar(actual.getDato().ID);
+                    actual.getDato().TEntreES = aux.getDato().TEntreES;
+                    actual.getDato().DuracionES = aux.getDato().DuracionES;
+                    lista.insertar(actual);
+                    this.eliminar(actual.getDato().ID);
+                }
             }
         }
     }
