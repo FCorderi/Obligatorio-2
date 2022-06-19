@@ -4,6 +4,8 @@
  */
 package com.mycompany.planificadorprocesos;
 
+import java.util.LinkedList;
+import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -84,11 +86,11 @@ public class InterfazInicial extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nombre", "Tipo", "Duración", "Tiempo entre E/S", "Tiempo espera de E/S", "Prioridad"
+                "ID", "Tipo", "Duración", "Tiempo entre E/S", "Tiempo espera de E/S", "Prioridad"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
+                java.lang.Double.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -134,10 +136,6 @@ public class InterfazInicial extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -148,52 +146,58 @@ public class InterfazInicial extends javax.swing.JFrame {
                     .addComponent(jLabel8))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator1)
-                    .addComponent(jLabel2)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(botonAñadir)
-                        .addGap(18, 18, 18)
-                        .addComponent(botonAñadirVarios))
+                        .addContainerGap()
+                        .addComponent(jScrollPane1))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 686, Short.MAX_VALUE)
+                            .addComponent(jLabel2)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(nombreProceso, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(27, 27, 27)
-                                .addComponent(tipoProceso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(botonAñadir)
                                 .addGap(18, 18, 18)
-                                .addComponent(jLabel3)
-                                .addGap(68, 68, 68)
-                                .addComponent(jLabel9)))
-                        .addGap(37, 37, 37)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
+                                .addComponent(botonAñadirVarios))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(duracionProceso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(28, 28, 28)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(16, 16, 16)
-                                .addComponent(tEntreES, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(28, 28, 28)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(nombreProceso, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(27, 27, 27)
+                                        .addComponent(tipoProceso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel3)
+                                        .addGap(68, 68, 68)
+                                        .addComponent(jLabel9)))
                                 .addGap(37, 37, 37)
-                                .addComponent(tEsperaES, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(34, 34, 34)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(prioridadProceso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel7))))
-                .addGap(105, 105, 105))
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addComponent(duracionProceso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(28, 28, 28)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(16, 16, 16)
+                                        .addComponent(tEntreES, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(28, 28, 28)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(37, 37, 37)
+                                        .addComponent(tEsperaES, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(34, 34, 34)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addComponent(prioridadProceso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel7))))
+                        .addGap(73, 73, 73)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -238,22 +242,34 @@ public class InterfazInicial extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private Proceso CrearProceso(){
+        String nombre = nombreProceso.getText();
+        String tipo = tipoProceso.getItemAt(tipoProceso.getSelectedIndex());
+        long duracion = Integer.parseInt(duracionProceso.getValue().toString());
+        long tiempoEntreES = Integer.parseInt(tEntreES.getValue().toString());
+        long duracionES = Integer.parseInt(tEsperaES.getValue().toString());
+        int prioridad = Integer.parseInt(prioridadProceso.getValue().toString());
+        idProceso++;
+        
+        Proceso proceso = new Proceso(idProceso, tipo, duracion, tiempoEntreES, duracionES, prioridad);
+        
+        return proceso;
+    }
     private void nombreProcesoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreProcesoActionPerformed
         
     }//GEN-LAST:event_nombreProcesoActionPerformed
 
     private void botonAñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAñadirActionPerformed
-        String nombre = nombreProceso.getText();
-        String tipo = tipoProceso.getItemAt(tipoProceso.getSelectedIndex());
-        int duracion = Integer.parseInt(duracionProceso.getValue().toString());
-        int tiempoEntreES = Integer.parseInt(tEntreES.getValue().toString());
-        int duracionES = Integer.parseInt(tEsperaES.getValue().toString());
-        int prioridad = Integer.parseInt(prioridadProceso.getValue().toString());
-        
-        Proceso proceso = new Proceso(nombre, tipo, duracion, tiempoEntreES, duracionES, prioridad);
-       
+        Proceso proceso = CrearProceso();
         DefaultTableModel dt =(DefaultTableModel)tablaProcesos.getModel();
-        String[] datos = {nombreProceso.getText(), tipoProceso.getItemAt(tipoProceso.getSelectedIndex()), duracionProceso.getValue().toString(), tEntreES.getValue().toString(), tEsperaES.getValue().toString(), prioridadProceso.getValue().toString()};
+        String[] datos = {
+            String.valueOf(proceso.ID), 
+            proceso.Tipo, 
+            String.valueOf(proceso.Duracion), 
+            String.valueOf(proceso.TEntreES), 
+            String.valueOf(proceso.DuracionES), 
+            String.valueOf(proceso.Prioridad), 
+        };
         dt.addRow(datos);
         
         if (tablaProcesos.getRowCount() > fila){
@@ -261,6 +277,15 @@ public class InterfazInicial extends javax.swing.JFrame {
         }
         else{
             fila = 0;
+        }
+        
+        Nodo nodo = new Nodo(proceso.ID, proceso);
+        if (proceso.Tipo.equals("SO")){
+            colaProcesos1.insertarOrdenado(nodo);
+        }else if(proceso.Tipo.equals("Batch")){
+            colaProcesos4.insertarOrdenado(nodo);
+        }else{
+            colaProcesos2.insertarOrdenado(nodo);
         }
     }//GEN-LAST:event_botonAñadirActionPerformed
 
@@ -312,6 +337,13 @@ public class InterfazInicial extends javax.swing.JFrame {
         });
     }
 
+    Lista<Proceso> colaProcesos1;
+    Lista<Proceso> colaProcesos2;
+    Lista<Proceso> colaProcesos3;
+    Lista<Proceso> colaProcesos4;
+    Lista<Proceso> procesosFinalizados;
+    Lista<Proceso> procesosBloqueados;
+    int idProceso = 0;
     private int fila = 0;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAñadir;

@@ -10,24 +10,52 @@ package com.mycompany.planificadorprocesos;
  */
 public class Proceso {
     
-    String Nombre;
+    long ID;
     
     String Tipo;
     
-    int Duracion;
+    long Duracion;
     
-    int TEntreES;
+    long TEntreES;
     
-    int DuracionES;
+    long DuracionES;
     
     int Prioridad;
     
-    public Proceso(String nombre, String tipo, int duracion, int tEntreES, int duracionES, int prioridad){
-        Nombre = nombre;
+    boolean Finalizado = false;
+    
+    boolean bloqueado = false;
+    
+    public Proceso( int id, String tipo, long duracion, long tEntreES, long duracionES, int prioridad){
+        ID = id;
         Tipo = tipo;
         Duracion = duracion;
         TEntreES = tEntreES;
         DuracionES = duracionES;
         Prioridad = prioridad;
+    }
+    
+    public long GetID(){
+        return ID;
+    }
+    
+    public String GetTipo(){
+        return Tipo;
+    }
+    
+    public long GetDuracion(){
+        return Duracion;
+    }
+    
+    public long GetTEntreES(){
+        return TEntreES;
+    }
+    
+    public long GetDuracionES(){
+        return DuracionES;
+    }
+    
+    public int GetPrioridad(){
+        return Prioridad;
     }
 }
