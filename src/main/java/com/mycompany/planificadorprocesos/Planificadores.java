@@ -13,15 +13,25 @@ import java.io.IOException;
  */
 public class Planificadores {
 
-    Lista<Proceso> listaP;
-    
-    public Planificadores(Lista<Proceso> lista) {
-        listaP = lista;
+    Lista<Proceso> listaP1;
+    Lista<Proceso> listaP2;
+    Lista<Proceso> listaP3;
+    Lista<Proceso> listaP4;
+
+    public Planificadores(Lista<Proceso> lista1, Lista<Proceso> lista2, Lista<Proceso> lista3, Lista<Proceso> lista4) {
+        listaP1 = lista1;
+        listaP2 = lista2;
+        listaP3 = lista3;
+        listaP4 = lista4;
     }
-    
-    Lista<Proceso> copiaLista = listaP;
+
+    Lista<Proceso> copiaLista1 = listaP1;
+    Lista<Proceso> copiaLista2 = listaP2;
+    Lista<Proceso> copiaLista3 = listaP3;
+    Lista<Proceso> copiaLista4 = listaP4;
     Lista<Proceso> procesosFinalizados;
     Lista<Proceso> procesosBloqueados;
+    int contadorEnvejecimiento = 0;
 
     Proceso procesoActivo = null;
 
@@ -30,7 +40,8 @@ public class Planificadores {
     long quantum = 4;
 
     long quantumCounter = quantum;
-/*
+
+    /*
     public void RR(Lista<Proceso> que) {
 
         try {
@@ -59,27 +70,52 @@ public class Planificadores {
         } catch (NullPointerException e) {
         }
     }
-*/
-    public Proceso ED(Lista<Proceso> listaP) {
-        Proceso p = null;
-        if (!listaP.esVacia()){
-            if (listaP.getPrimero().getDato().Duracion == 0){
-                listaP.getPrimero().getDato().Finalizado = true;
-                procesosFinalizados.insertar(listaP.getPrimero());
-                listaP.eliminar(listaP.getPrimero().getDato().Prioridad);
-            }
-            if (listaP.getPrimero().getDato().TEntreES == 0){
-                listaP.getPrimero().getDato().bloqueado = true;
-                procesosBloqueados.insertar(listaP.getPrimero());
-                listaP.eliminar(listaP.getPrimero().getDato().Prioridad);
-            }
-            
+     */
+    public Proceso evenDriven(Lista<Proceso> listaP) {
+        Proceso p = listaP.getPrimero().getDato();
 
+        procesosBloqueados.contadorDesbloqueoOrdenado(listaP, copiaLista1);
+
+        p.Duracion--;
+        if (p.Duracion == 0) {
+            p.Finalizado = true;
+            procesosFinalizados.insertar(listaP.getPrimero());
+            listaP.eliminar(p.ID);
         }
+
+        p.TEntreES--;
+        if (p.TEntreES == 0) {
+            p.bloqueado = true;
+            procesosBloqueados.insertar(listaP.getPrimero());
+            listaP.eliminar(p.ID);
+        }
+
+        contadorEnvejecimiento++;
+        if (contadorEnvejecimiento == 2) {
+            contadorEnvejecimiento = 0;
+            listaP.bajarPrioridades();
+        }
+
         return p;
     }
 
-    public void SJF() {
+    public void firstComeFirstServed(Lista<Proceso> listaP) {
+        Proceso p = listaP.getPrimero().getDato();
+        
+        procesosBloqueados.contadorDesbloqueoDesordenado(listaP, copiaLista4);
+        
+        p.Duracion--;
+        if (p.Duracion == 0) {
+            p.Finalizado = true;
+            procesosFinalizados.insertar(listaP.getPrimero());
+            listaP.eliminar(p.ID);
+        }
 
+        p.TEntreES--;
+        if (p.TEntreES == 0) {
+            p.bloqueado = true;
+            procesosBloqueados.insertar(listaP.getPrimero());
+            listaP.eliminar(p.ID);
+        }
     }
 }
