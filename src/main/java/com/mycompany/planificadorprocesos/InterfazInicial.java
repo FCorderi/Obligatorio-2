@@ -224,45 +224,45 @@ public class InterfazInicial extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private Proceso CrearProceso(){
+    private Proceso CrearProceso() {
         String tipo = tipoProceso.getItemAt(tipoProceso.getSelectedIndex());
         long duracion = Integer.parseInt(duracionProceso.getValue().toString());
         long tiempoEntreES = Integer.parseInt(tEntreES.getValue().toString());
         long duracionES = Integer.parseInt(tEsperaES.getValue().toString());
         int prioridad = Integer.parseInt(prioridadProceso.getValue().toString());
         idProceso++;
-        
+
         Proceso proceso = new Proceso(idProceso, tipo, duracion, tiempoEntreES, duracionES, prioridad);
-        
+
         return proceso;
     }
     private void botonAñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAñadirActionPerformed
         Proceso proceso = CrearProceso();
-        DefaultTableModel dt =(DefaultTableModel)tablaProcesos.getModel();
+        DefaultTableModel dt = (DefaultTableModel) tablaProcesos.getModel();
         String[] datos = {
-            String.valueOf(proceso.ID), 
-            proceso.Tipo, 
-            String.valueOf(proceso.Duracion), 
-            String.valueOf(proceso.TEntreES), 
-            String.valueOf(proceso.DuracionES), 
-            String.valueOf(proceso.Prioridad), 
-        };
+            String.valueOf(proceso.ID),
+            proceso.Tipo,
+            String.valueOf(proceso.Duracion),
+            String.valueOf(proceso.TEntreES),
+            String.valueOf(proceso.DuracionES),
+            String.valueOf(proceso.Prioridad),};
         dt.addRow(datos);
-        
-        if (tablaProcesos.getRowCount() > fila){
+
+        if (tablaProcesos.getRowCount() > fila) {
             fila++;
-        }
-        else{
+        } else {
             fila = 0;
         }
-        
+
         Nodo nodo = new Nodo(proceso.ID, proceso);
-        if (proceso.Tipo.equals("SO")){
+        if (proceso.Tipo.equals("SO")) {
             colaProcesos1.insertarOrdenado(nodo);
-        }else if(proceso.Tipo.equals("Batch")){
+        } else if (proceso.Tipo.equals("Batch")) {
             colaProcesos4.insertarOrdenado(nodo);
-        }else{
+        } else if (proceso.TEntreES > proceso.DuracionES) {
             colaProcesos2.insertarOrdenado(nodo);
+        } else {
+            colaProcesos3.insertarOrdenado(nodo);
         }
     }//GEN-LAST:event_botonAñadirActionPerformed
 
