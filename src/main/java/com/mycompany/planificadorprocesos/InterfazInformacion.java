@@ -20,6 +20,8 @@ public class InterfazInformacion extends javax.swing.JFrame {
     /**
      * Creates new form IntefazInformacion
      */
+    Planificadores planificador;
+    
     public InterfazInformacion(int quantum, Lista<Proceso> lista1, Lista<Proceso> lista2, Lista<Proceso> lista3, Lista<Proceso> lista4) {
         initComponents();
         listaP1 = lista1;
@@ -27,8 +29,8 @@ public class InterfazInformacion extends javax.swing.JFrame {
         listaP3 = lista3;
         listaP4 = lista4;
         Quantum = quantum;
-        //this.getco //timer.schedule(new tarea(), 1000);
-                //timer.schedule(new tarea(), 1000, 1000);
+        planificador = new Planificadores(Quantum, listaP1, listaP2, listaP3, listaP4, procesosFinalizados, procesosBloqueados);
+     
         timer.start();
     }
 
@@ -37,16 +39,14 @@ public class InterfazInformacion extends javax.swing.JFrame {
 //            loop();
 //        }
 //    }
-
     Timer timer = new Timer(1000, new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            loop();
+            loop(planificador);
             // Aquí el código que queramos ejecutar.
         }
     });
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -214,24 +214,29 @@ public class InterfazInformacion extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
                                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addGap(80, 80, 80)
-                                        .addComponent(jLabel3)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addComponent(jLabel2)
+                                                .addGap(80, 80, 80))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel1)
+                                                .addGap(43, 43, 43)
+                                                .addComponent(procesoEjecucionId, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(6, 6, 6)
+                                                .addComponent(procesoTR, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(jLabel3))
                                         .addGap(24, 24, 24)))
                                 .addGap(18, 18, 18)
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(43, 43, 43)
-                                .addComponent(procesoEjecucionId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(60, 60, 60)
-                                .addComponent(procesoTR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addGap(18, 18, 18)
@@ -347,10 +352,9 @@ public class InterfazInformacion extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_bloquearProcesoActionPerformed
 
-    public void loop() {
-        Planificadores planificador = new Planificadores(Quantum, listaP1, listaP2, listaP3, listaP4, procesosFinalizados, procesosBloqueados);
+    public void loop(Planificadores planificador){
         colaEjecucion.setText("Cola 1 (procesos del sistema)");
-        while ((!listaP1.esVacia()) || (!procesosBloqueados.esVacia())) {
+        if ((!listaP1.esVacia()) || (!procesosBloqueados.esVacia())) {
 
             System.out.println("INICIO");
             Proceso p = planificador.evenDriven(listaP1);
@@ -422,50 +426,239 @@ public class InterfazInformacion extends javax.swing.JFrame {
                     datos2[1] = String.valueOf(actual.getDato().Tipo);
                     dt3.addRow(datos2);
                 }
+            }
+        }
+//-----------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------
 
+        else if ((!listaP2.esVacia()) || (!procesosBloqueados.esVacia())) {
+            Proceso pRR = planificador.roundRobin(listaP2, 2);
+            if (pRR != null) {
+                procesoEjecucionId.setText(String.valueOf(pRR.ID));
+                procesoTR.setText(String.valueOf(pRR.Duracion));
             }
 
-            /*
-            DefaultTableModel dt = (DefaultTableModel) tablaListos.getModel();
-            String[] datos = {
-                String.valueOf(p.ID),
-                p.Tipo,
-                String.valueOf(p.Duracion),
-                String.valueOf(p.TEntreES),
-                String.valueOf(p.DuracionES),
-                String.valueOf(p.Prioridad),};
-            dt.addRow(datos);
-             */
-//            try {
-//                Thread.sleep(10000);
-//                System.out.println("SLEEP");
-//            } catch (Exception e) {
-//            }
-        }
-        //       }
-        /*
-        while ((!listaP2.esVacia()) || (!procesosBloqueados.esVacia())) {
-            planificador.roundRobin(listaP2, 2);
-            try {
-                Thread.sleep(1000);
-            } catch (Exception e) {
+            Nodo<Proceso> actualRR = listaP2.getPrimero();
+            DefaultTableModel dtRR = (DefaultTableModel) tablaListos.getModel();
+            int filasRR = dtRR.getRowCount();
+            for (int i = filasRR - 1; i >= 0; i--) {
+                dtRR.removeRow(i);
+            }
+            if (actualRR != null) {
+                String[] datos = {
+                    String.valueOf(actualRR.getDato().ID),
+                    actualRR.getDato().Tipo,
+                    String.valueOf(actualRR.getDato().Prioridad),};
+                dtRR.addRow(datos);
+                while (actualRR.getSiguiente() != null) {
+                    System.out.println("LISTOS");
+                    actualRR = actualRR.getSiguiente();
+                    datos[0] = String.valueOf(actualRR.getDato().ID);
+                    datos[1] = actualRR.getDato().Tipo;
+                    datos[2] = String.valueOf(actualRR.getDato().Prioridad);
+                    dtRR.addRow(datos);
+                }
+            }
+
+            actualRR = procesosBloqueados.getPrimero();
+            System.out.println(procesosBloqueados.imprimir());
+            if (actualRR != null) {
+                DefaultTableModel dt2 = (DefaultTableModel) tablaBloqueados.getModel();
+                int filasb = dt2.getRowCount();
+                for (int i = filasb - 1; i >= 0; i--) {
+                    dt2.removeRow(i);
+                }
+                String[] datos1 = {
+                    String.valueOf(actualRR.getDato().ID),
+                    String.valueOf(actualRR.getDato().DuracionES),
+                    String.valueOf(actualRR.getDato().Prioridad),};
+                dt2.addRow(datos1);
+                while (actualRR.getSiguiente() != null) {
+                    System.out.println("BLOQUEADOS");
+                    actualRR = actualRR.getSiguiente();
+                    datos1[0] = String.valueOf(actualRR.getDato().ID);
+                    datos1[1] = String.valueOf(actualRR.getDato().DuracionES);
+                    datos1[2] = String.valueOf(actualRR.getDato().Prioridad);
+                    dt2.addRow(datos1);
+                }
+            }
+
+            actualRR = procesosFinalizados.getPrimero();
+            if (actualRR != null) {
+                DefaultTableModel dt3 = (DefaultTableModel) tablaFinalizados.getModel();
+                int filasf = dt3.getRowCount();
+                for (int i = filasf - 1; i >= 0; i--) {
+                    dt3.removeRow(i);
+                }
+                String[] datos2 = {
+                    String.valueOf(actualRR.getDato().ID),
+                    actualRR.getDato().Tipo,};
+                dt3.addRow(datos2);
+                while (actualRR.getSiguiente() != null) {
+                    System.out.println("FINALIZADOS");
+                    actualRR = actualRR.getSiguiente();
+                    datos2[0] = String.valueOf(actualRR.getDato().ID);
+                    datos2[1] = String.valueOf(actualRR.getDato().Tipo);
+                    dt3.addRow(datos2);
+                }
             }
         }
-        while ((!listaP3.esVacia()) || (!procesosBloqueados.esVacia())) {
-            planificador.roundRobin(listaP3, 3);
-            try {
-                Thread.sleep(1000);
-            } catch (Exception e) {
+//-----------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------
+
+        else if ((!listaP3.esVacia()) || (!procesosBloqueados.esVacia())) {
+            Proceso pRR2 = planificador.roundRobin(listaP3, 3);
+            if (pRR2 != null) {
+                procesoEjecucionId.setText(String.valueOf(pRR2.ID));
+                procesoTR.setText(String.valueOf(pRR2.Duracion));
+            }
+
+            Nodo<Proceso> actualRR2 = listaP3.getPrimero();
+            DefaultTableModel dtRR2 = (DefaultTableModel) tablaListos.getModel();
+            int filasRR2 = dtRR2.getRowCount();
+            for (int i = filasRR2 - 1; i >= 0; i--) {
+                dtRR2.removeRow(i);
+            }
+            if (actualRR2 != null) {
+                String[] datos = {
+                    String.valueOf(actualRR2.getDato().ID),
+                    actualRR2.getDato().Tipo,
+                    String.valueOf(actualRR2.getDato().Prioridad),};
+                dtRR2.addRow(datos);
+                while (actualRR2.getSiguiente() != null) {
+                    System.out.println("LISTOS");
+                    actualRR2 = actualRR2.getSiguiente();
+                    datos[0] = String.valueOf(actualRR2.getDato().ID);
+                    datos[1] = actualRR2.getDato().Tipo;
+                    datos[2] = String.valueOf(actualRR2.getDato().Prioridad);
+                    dtRR2.addRow(datos);
+                }
+            }
+
+            actualRR2 = procesosBloqueados.getPrimero();
+            System.out.println(procesosBloqueados.imprimir());
+            if (actualRR2 != null) {
+                DefaultTableModel dt2 = (DefaultTableModel) tablaBloqueados.getModel();
+                int filasb = dt2.getRowCount();
+                for (int i = filasb - 1; i >= 0; i--) {
+                    dt2.removeRow(i);
+                }
+                String[] datos1 = {
+                    String.valueOf(actualRR2.getDato().ID),
+                    String.valueOf(actualRR2.getDato().DuracionES),
+                    String.valueOf(actualRR2.getDato().Prioridad),};
+                dt2.addRow(datos1);
+                while (actualRR2.getSiguiente() != null) {
+                    System.out.println("BLOQUEADOS");
+                    actualRR2 = actualRR2.getSiguiente();
+                    datos1[0] = String.valueOf(actualRR2.getDato().ID);
+                    datos1[1] = String.valueOf(actualRR2.getDato().DuracionES);
+                    datos1[2] = String.valueOf(actualRR2.getDato().Prioridad);
+                    dt2.addRow(datos1);
+                }
+            }
+
+            actualRR2 = procesosFinalizados.getPrimero();
+            if (actualRR2 != null) {
+                DefaultTableModel dt3 = (DefaultTableModel) tablaFinalizados.getModel();
+                int filasRR22 = dt3.getRowCount();
+                for (int i = filasRR22 - 1; i >= 0; i--) {
+                    dt3.removeRow(i);
+                }
+                String[] datos2 = {
+                    String.valueOf(actualRR2.getDato().ID),
+                    actualRR2.getDato().Tipo,};
+                dt3.addRow(datos2);
+                while (actualRR2.getSiguiente() != null) {
+                    System.out.println("FINALIZADOS");
+                    actualRR2 = actualRR2.getSiguiente();
+                    datos2[0] = String.valueOf(actualRR2.getDato().ID);
+                    datos2[1] = String.valueOf(actualRR2.getDato().Tipo);
+                    dt3.addRow(datos2);
+                }
             }
         }
-        while ((!listaP4.esVacia()) || (!procesosBloqueados.esVacia())) {
-            planificador.firstComeFirstServed(listaP4);
-            try {
-                Thread.sleep(1000);
-            } catch (Exception e) {
+//-----------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------
+
+        else if ((!listaP4.esVacia()) || (!procesosBloqueados.esVacia())) {
+            Proceso pF = planificador.firstComeFirstServed(listaP4);
+            if (pF != null) {
+                procesoEjecucionId.setText(String.valueOf(pF.ID));
+                procesoTR.setText(String.valueOf(pF.Duracion));
+            }
+
+            Nodo<Proceso> actualf = listaP4.getPrimero();
+            DefaultTableModel dtf = (DefaultTableModel) tablaListos.getModel();
+            int filasff = dtf.getRowCount();
+            for (int i = filasff - 1; i >= 0; i--) {
+                dtf.removeRow(i);
+            }
+            if (actualf != null) {
+                String[] datos = {
+                    String.valueOf(actualf.getDato().ID),
+                    actualf.getDato().Tipo,
+                    String.valueOf(actualf.getDato().Prioridad),};
+                dtf.addRow(datos);
+                while (actualf.getSiguiente() != null) {
+                    System.out.println("LISTOS");
+                    actualf = actualf.getSiguiente();
+                    datos[0] = String.valueOf(actualf.getDato().ID);
+                    datos[1] = actualf.getDato().Tipo;
+                    datos[2] = String.valueOf(actualf.getDato().Prioridad);
+                    dtf.addRow(datos);
+                }
+            }
+
+            actualf = procesosBloqueados.getPrimero();
+            System.out.println(procesosBloqueados.imprimir());
+            if (actualf != null) {
+                DefaultTableModel dt2 = (DefaultTableModel) tablaBloqueados.getModel();
+                int filasb = dt2.getRowCount();
+                for (int i = filasb - 1; i >= 0; i--) {
+                    dt2.removeRow(i);
+                }
+                String[] datos1 = {
+                    String.valueOf(actualf.getDato().ID),
+                    String.valueOf(actualf.getDato().DuracionES),
+                    String.valueOf(actualf.getDato().Prioridad),};
+                dt2.addRow(datos1);
+                while (actualf.getSiguiente() != null) {
+                    System.out.println("BLOQUEADOS");
+                    actualf = actualf.getSiguiente();
+                    datos1[0] = String.valueOf(actualf.getDato().ID);
+                    datos1[1] = String.valueOf(actualf.getDato().DuracionES);
+                    datos1[2] = String.valueOf(actualf.getDato().Prioridad);
+                    dt2.addRow(datos1);
+                }
+            }
+
+            actualf = procesosFinalizados.getPrimero();
+            if (actualf != null) {
+                DefaultTableModel dt3 = (DefaultTableModel) tablaFinalizados.getModel();
+                int filasf = dt3.getRowCount();
+                for (int i = filasf - 1; i >= 0; i--) {
+                    dt3.removeRow(i);
+                }
+                String[] datos2 = {
+                    String.valueOf(actualf.getDato().ID),
+                    actualf.getDato().Tipo,};
+                dt3.addRow(datos2);
+                while (actualf.getSiguiente() != null) {
+                    System.out.println("FINALIZADOS");
+                    actualf = actualf.getSiguiente();
+                    datos2[0] = String.valueOf(actualf.getDato().ID);
+                    datos2[1] = String.valueOf(actualf.getDato().Tipo);
+                    dt3.addRow(datos2);
+                }
             }
         }
-         */
     }
 
     /**
