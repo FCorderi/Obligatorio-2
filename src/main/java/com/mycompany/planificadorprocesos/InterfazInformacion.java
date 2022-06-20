@@ -21,7 +21,7 @@ public class InterfazInformacion extends javax.swing.JFrame {
      * Creates new form IntefazInformacion
      */
     Planificadores planificador;
-    
+
     public InterfazInformacion(int quantum, Lista<Proceso> lista1, Lista<Proceso> lista2, Lista<Proceso> lista3, Lista<Proceso> lista4) {
         initComponents();
         listaP1 = lista1;
@@ -30,7 +30,7 @@ public class InterfazInformacion extends javax.swing.JFrame {
         listaP4 = lista4;
         Quantum = quantum;
         planificador = new Planificadores(Quantum, listaP1, listaP2, listaP3, listaP4, procesosFinalizados, procesosBloqueados);
-     
+
         timer.start();
     }
 
@@ -47,6 +47,7 @@ public class InterfazInformacion extends javax.swing.JFrame {
             // Aquí el código que queramos ejecutar.
         }
     });
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -82,6 +83,8 @@ public class InterfazInformacion extends javax.swing.JFrame {
         bloquearProcesoId = new javax.swing.JSpinner();
         cambiarPrioridad = new javax.swing.JButton();
         bloquearProceso = new javax.swing.JButton();
+        procesoTRES = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -204,6 +207,15 @@ public class InterfazInformacion extends javax.swing.JFrame {
             }
         });
 
+        procesoTRES.setEditable(false);
+        procesoTRES.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                procesoTRESActionPerformed(evt);
+            }
+        });
+
+        jLabel13.setText("Tiempo restante para bloqueo");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -235,8 +247,16 @@ public class InterfazInformacion extends javax.swing.JFrame {
                                                 .addComponent(procesoTR, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addComponent(jLabel3))
                                         .addGap(24, 24, 24)))
-                                .addGap(18, 18, 18)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(14, 14, 14)
+                                        .addComponent(jLabel13))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(50, 50, 50)
+                                        .addComponent(procesoTRES, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addGap(18, 18, 18)
@@ -284,35 +304,41 @@ public class InterfazInformacion extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(procesoEjecucionId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(procesoTR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(50, 50, 50)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(colaEjecucion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
-                    .addComponent(jLabel12))
-                .addGap(9, 9, 9)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(cambiarPrioPrio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cambiarPrioId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cambiarPrioridad))
-                .addGap(8, 8, 8)
-                .addComponent(jLabel11)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(bloquearProcesoId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bloquearProceso))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(procesoEjecucionId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(procesoTR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(50, 50, 50)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(colaEjecucion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(27, 27, 27)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel12))
+                        .addGap(9, 9, 9)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(cambiarPrioPrio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cambiarPrioId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cambiarPrioridad))
+                        .addGap(8, 8, 8)
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel9)
+                            .addComponent(bloquearProcesoId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(bloquearProceso)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel13)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(procesoTRES, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -352,15 +378,31 @@ public class InterfazInformacion extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_bloquearProcesoActionPerformed
 
-    public void loop(Planificadores planificador){
-        colaEjecucion.setText("Cola 1 (procesos del sistema)");
-        if ((!listaP1.esVacia()) || (!procesosBloqueados.esVacia())) {
+    private void procesoTRESActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_procesoTRESActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_procesoTRESActionPerformed
 
-            System.out.println("INICIO");
+    public void loop(Planificadores planificador) {
+        colaEjecucion.setText("Cola 1 (procesos del sistema)");
+        System.out.println(colaEnTrabajo);
+        if (colaEnTrabajo == 0) {
+            if (listaP1.esVacia() && procesosBloqueados.esVacia()) {
+                colaEnTrabajo++;
+                DefaultTableModel dt2 = (DefaultTableModel) tablaBloqueados.getModel();
+                int filasb = dt2.getRowCount();
+                for (int i = filasb - 1; i >= 0; i--) {
+                    dt2.removeRow(i);
+                }
+            }
             Proceso p = planificador.evenDriven(listaP1);
             if (p != null) {
                 procesoEjecucionId.setText(String.valueOf(p.ID));
                 procesoTR.setText(String.valueOf(p.Duracion));
+                if (p.TEntreES >= 0) {
+                    procesoTRES.setText(String.valueOf(p.TEntreES));
+                } else {
+                    procesoTRES.setText("0");
+                }
             }
 
             Nodo<Proceso> actual = listaP1.getPrimero();
@@ -376,7 +418,6 @@ public class InterfazInformacion extends javax.swing.JFrame {
                     String.valueOf(actual.getDato().Prioridad),};
                 dt1.addRow(datos);
                 while (actual.getSiguiente() != null) {
-                    System.out.println("LISTOS");
                     actual = actual.getSiguiente();
                     datos[0] = String.valueOf(actual.getDato().ID);
                     datos[1] = actual.getDato().Tipo;
@@ -386,20 +427,19 @@ public class InterfazInformacion extends javax.swing.JFrame {
             }
 
             actual = procesosBloqueados.getPrimero();
-            System.out.println(procesosBloqueados.imprimir());
+            DefaultTableModel dt2 = (DefaultTableModel) tablaBloqueados.getModel();
+            int filasb = dt2.getRowCount();
+            for (int i = filasb - 1; i >= 0; i--) {
+                dt2.removeRow(i);
+            }
             if (actual != null) {
-                DefaultTableModel dt2 = (DefaultTableModel) tablaBloqueados.getModel();
-                int filasb = dt2.getRowCount();
-                for (int i = filasb - 1; i >= 0; i--) {
-                    dt2.removeRow(i);
-                }
+
                 String[] datos1 = {
                     String.valueOf(actual.getDato().ID),
                     String.valueOf(actual.getDato().DuracionES),
                     String.valueOf(actual.getDato().Prioridad),};
                 dt2.addRow(datos1);
                 while (actual.getSiguiente() != null) {
-                    System.out.println("BLOQUEADOS");
                     actual = actual.getSiguiente();
                     datos1[0] = String.valueOf(actual.getDato().ID);
                     datos1[1] = String.valueOf(actual.getDato().DuracionES);
@@ -420,24 +460,36 @@ public class InterfazInformacion extends javax.swing.JFrame {
                     actual.getDato().Tipo,};
                 dt3.addRow(datos2);
                 while (actual.getSiguiente() != null) {
-                    System.out.println("FINALIZADOS");
                     actual = actual.getSiguiente();
                     datos2[0] = String.valueOf(actual.getDato().ID);
                     datos2[1] = String.valueOf(actual.getDato().Tipo);
                     dt3.addRow(datos2);
                 }
             }
-        }
-//-----------------------------------------------------------------------------------------------------
-//-----------------------------------------------------------------------------------------------------
-//-----------------------------------------------------------------------------------------------------
-//-----------------------------------------------------------------------------------------------------
 
-        else if ((!listaP2.esVacia()) || (!procesosBloqueados.esVacia())) {
+        } //-----------------------------------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------------------------------
+        if (colaEnTrabajo == 1) {
+            if (listaP2.esVacia() && procesosBloqueados.esVacia()) {
+                colaEnTrabajo++;
+                DefaultTableModel dt2 = (DefaultTableModel) tablaBloqueados.getModel();
+                int filasb = dt2.getRowCount();
+                for (int i = filasb - 1; i >= 0; i--) {
+                    dt2.removeRow(i);
+                }
+            }
+
             Proceso pRR = planificador.roundRobin(listaP2, 2);
             if (pRR != null) {
                 procesoEjecucionId.setText(String.valueOf(pRR.ID));
                 procesoTR.setText(String.valueOf(pRR.Duracion));
+                if (pRR.TEntreES >= 0) {
+                    procesoTRES.setText(String.valueOf(pRR.TEntreES));
+                } else {
+                    procesoTRES.setText("0");
+                }
             }
 
             Nodo<Proceso> actualRR = listaP2.getPrimero();
@@ -453,7 +505,6 @@ public class InterfazInformacion extends javax.swing.JFrame {
                     String.valueOf(actualRR.getDato().Prioridad),};
                 dtRR.addRow(datos);
                 while (actualRR.getSiguiente() != null) {
-                    System.out.println("LISTOS");
                     actualRR = actualRR.getSiguiente();
                     datos[0] = String.valueOf(actualRR.getDato().ID);
                     datos[1] = actualRR.getDato().Tipo;
@@ -463,20 +514,19 @@ public class InterfazInformacion extends javax.swing.JFrame {
             }
 
             actualRR = procesosBloqueados.getPrimero();
-            System.out.println(procesosBloqueados.imprimir());
+            DefaultTableModel dt2 = (DefaultTableModel) tablaBloqueados.getModel();
+            int filasb = dt2.getRowCount();
+            for (int i = filasb - 1; i >= 0; i--) {
+                dt2.removeRow(i);
+            }
             if (actualRR != null) {
-                DefaultTableModel dt2 = (DefaultTableModel) tablaBloqueados.getModel();
-                int filasb = dt2.getRowCount();
-                for (int i = filasb - 1; i >= 0; i--) {
-                    dt2.removeRow(i);
-                }
+
                 String[] datos1 = {
                     String.valueOf(actualRR.getDato().ID),
                     String.valueOf(actualRR.getDato().DuracionES),
                     String.valueOf(actualRR.getDato().Prioridad),};
                 dt2.addRow(datos1);
                 while (actualRR.getSiguiente() != null) {
-                    System.out.println("BLOQUEADOS");
                     actualRR = actualRR.getSiguiente();
                     datos1[0] = String.valueOf(actualRR.getDato().ID);
                     datos1[1] = String.valueOf(actualRR.getDato().DuracionES);
@@ -497,7 +547,6 @@ public class InterfazInformacion extends javax.swing.JFrame {
                     actualRR.getDato().Tipo,};
                 dt3.addRow(datos2);
                 while (actualRR.getSiguiente() != null) {
-                    System.out.println("FINALIZADOS");
                     actualRR = actualRR.getSiguiente();
                     datos2[0] = String.valueOf(actualRR.getDato().ID);
                     datos2[1] = String.valueOf(actualRR.getDato().Tipo);
@@ -505,16 +554,28 @@ public class InterfazInformacion extends javax.swing.JFrame {
                 }
             }
         }
-//-----------------------------------------------------------------------------------------------------
-//-----------------------------------------------------------------------------------------------------
-//-----------------------------------------------------------------------------------------------------
-//-----------------------------------------------------------------------------------------------------
-
-        else if ((!listaP3.esVacia()) || (!procesosBloqueados.esVacia())) {
+        //-----------------------------------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------------------------------
+        if (colaEnTrabajo == 2) {
+            if (listaP3.esVacia() && procesosBloqueados.esVacia()) {
+                colaEnTrabajo++;
+                DefaultTableModel dt2 = (DefaultTableModel) tablaBloqueados.getModel();
+                int filasb = dt2.getRowCount();
+                for (int i = filasb - 1; i >= 0; i--) {
+                    dt2.removeRow(i);
+                }
+            }
             Proceso pRR2 = planificador.roundRobin(listaP3, 3);
             if (pRR2 != null) {
                 procesoEjecucionId.setText(String.valueOf(pRR2.ID));
                 procesoTR.setText(String.valueOf(pRR2.Duracion));
+                if (pRR2.TEntreES >= 0) {
+                    procesoTRES.setText(String.valueOf(pRR2.TEntreES));
+                } else {
+                    procesoTRES.setText("0");
+                }
             }
 
             Nodo<Proceso> actualRR2 = listaP3.getPrimero();
@@ -530,7 +591,6 @@ public class InterfazInformacion extends javax.swing.JFrame {
                     String.valueOf(actualRR2.getDato().Prioridad),};
                 dtRR2.addRow(datos);
                 while (actualRR2.getSiguiente() != null) {
-                    System.out.println("LISTOS");
                     actualRR2 = actualRR2.getSiguiente();
                     datos[0] = String.valueOf(actualRR2.getDato().ID);
                     datos[1] = actualRR2.getDato().Tipo;
@@ -540,20 +600,19 @@ public class InterfazInformacion extends javax.swing.JFrame {
             }
 
             actualRR2 = procesosBloqueados.getPrimero();
-            System.out.println(procesosBloqueados.imprimir());
+            DefaultTableModel dt2 = (DefaultTableModel) tablaBloqueados.getModel();
+            int filasb = dt2.getRowCount();
+            for (int i = filasb - 1; i >= 0; i--) {
+                dt2.removeRow(i);
+            }
             if (actualRR2 != null) {
-                DefaultTableModel dt2 = (DefaultTableModel) tablaBloqueados.getModel();
-                int filasb = dt2.getRowCount();
-                for (int i = filasb - 1; i >= 0; i--) {
-                    dt2.removeRow(i);
-                }
+
                 String[] datos1 = {
                     String.valueOf(actualRR2.getDato().ID),
                     String.valueOf(actualRR2.getDato().DuracionES),
                     String.valueOf(actualRR2.getDato().Prioridad),};
                 dt2.addRow(datos1);
                 while (actualRR2.getSiguiente() != null) {
-                    System.out.println("BLOQUEADOS");
                     actualRR2 = actualRR2.getSiguiente();
                     datos1[0] = String.valueOf(actualRR2.getDato().ID);
                     datos1[1] = String.valueOf(actualRR2.getDato().DuracionES);
@@ -574,24 +633,36 @@ public class InterfazInformacion extends javax.swing.JFrame {
                     actualRR2.getDato().Tipo,};
                 dt3.addRow(datos2);
                 while (actualRR2.getSiguiente() != null) {
-                    System.out.println("FINALIZADOS");
                     actualRR2 = actualRR2.getSiguiente();
                     datos2[0] = String.valueOf(actualRR2.getDato().ID);
                     datos2[1] = String.valueOf(actualRR2.getDato().Tipo);
                     dt3.addRow(datos2);
                 }
             }
-        }
-//-----------------------------------------------------------------------------------------------------
-//-----------------------------------------------------------------------------------------------------
-//-----------------------------------------------------------------------------------------------------
-//-----------------------------------------------------------------------------------------------------
 
-        else if ((!listaP4.esVacia()) || (!procesosBloqueados.esVacia())) {
+        } //-----------------------------------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------------------------------
+        if (colaEnTrabajo == 3) {
+            if (listaP4.esVacia() && procesosBloqueados.esVacia()) {
+                colaEnTrabajo = 0;
+                DefaultTableModel dt2 = (DefaultTableModel) tablaBloqueados.getModel();
+                int filasb = dt2.getRowCount();
+                for (int i = filasb - 1; i >= 0; i--) {
+                    dt2.removeRow(i);
+                }
+            }
+
             Proceso pF = planificador.firstComeFirstServed(listaP4);
             if (pF != null) {
                 procesoEjecucionId.setText(String.valueOf(pF.ID));
                 procesoTR.setText(String.valueOf(pF.Duracion));
+                if (pF.TEntreES >= 0) {
+                    procesoTRES.setText(String.valueOf(pF.TEntreES));
+                } else {
+                    procesoTRES.setText("0");
+                }
             }
 
             Nodo<Proceso> actualf = listaP4.getPrimero();
@@ -607,7 +678,6 @@ public class InterfazInformacion extends javax.swing.JFrame {
                     String.valueOf(actualf.getDato().Prioridad),};
                 dtf.addRow(datos);
                 while (actualf.getSiguiente() != null) {
-                    System.out.println("LISTOS");
                     actualf = actualf.getSiguiente();
                     datos[0] = String.valueOf(actualf.getDato().ID);
                     datos[1] = actualf.getDato().Tipo;
@@ -617,20 +687,18 @@ public class InterfazInformacion extends javax.swing.JFrame {
             }
 
             actualf = procesosBloqueados.getPrimero();
-            System.out.println(procesosBloqueados.imprimir());
+            DefaultTableModel dt2 = (DefaultTableModel) tablaBloqueados.getModel();
+            int filasb = dt2.getRowCount();
+            for (int i = filasb - 1; i >= 0; i--) {
+                dt2.removeRow(i);
+            }
             if (actualf != null) {
-                DefaultTableModel dt2 = (DefaultTableModel) tablaBloqueados.getModel();
-                int filasb = dt2.getRowCount();
-                for (int i = filasb - 1; i >= 0; i--) {
-                    dt2.removeRow(i);
-                }
                 String[] datos1 = {
                     String.valueOf(actualf.getDato().ID),
                     String.valueOf(actualf.getDato().DuracionES),
                     String.valueOf(actualf.getDato().Prioridad),};
                 dt2.addRow(datos1);
                 while (actualf.getSiguiente() != null) {
-                    System.out.println("BLOQUEADOS");
                     actualf = actualf.getSiguiente();
                     datos1[0] = String.valueOf(actualf.getDato().ID);
                     datos1[1] = String.valueOf(actualf.getDato().DuracionES);
@@ -651,13 +719,13 @@ public class InterfazInformacion extends javax.swing.JFrame {
                     actualf.getDato().Tipo,};
                 dt3.addRow(datos2);
                 while (actualf.getSiguiente() != null) {
-                    System.out.println("FINALIZADOS");
                     actualf = actualf.getSiguiente();
                     datos2[0] = String.valueOf(actualf.getDato().ID);
                     datos2[1] = String.valueOf(actualf.getDato().Tipo);
                     dt3.addRow(datos2);
                 }
             }
+
         }
     }
 
@@ -695,10 +763,11 @@ public class InterfazInformacion extends javax.swing.JFrame {
             }
         });
     }
-    Lista<Proceso> listaP1;
-    Lista<Proceso> listaP2;
-    Lista<Proceso> listaP3;
-    Lista<Proceso> listaP4;
+    int colaEnTrabajo = 0;
+    Lista<Proceso> listaP1 = new Lista();
+    Lista<Proceso> listaP2 = new Lista();
+    Lista<Proceso> listaP3 = new Lista();
+    Lista<Proceso> listaP4 = new Lista();
     Lista<Proceso> procesosFinalizados = new Lista();
     Lista<Proceso> procesosBloqueados = new Lista();
     int Quantum;
@@ -713,6 +782,7 @@ public class InterfazInformacion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -726,6 +796,7 @@ public class InterfazInformacion extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextField procesoEjecucionId;
     private javax.swing.JTextField procesoTR;
+    private javax.swing.JTextField procesoTRES;
     private javax.swing.JTable tablaBloqueados;
     private javax.swing.JTable tablaFinalizados;
     private javax.swing.JTable tablaListos;

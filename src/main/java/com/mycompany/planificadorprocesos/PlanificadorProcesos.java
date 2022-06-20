@@ -13,7 +13,6 @@ import java.util.Vector;
 public class PlanificadorProcesos {
 
     public static void main(String[] args) {
-       
         new InterfazInicial().setVisible(true);
 
 //        Proceso p1 = new Proceso(1, "SO", 3, 5, 6, 8);
@@ -60,6 +59,5 @@ public class PlanificadorProcesos {
 //        System.out.println(p.evenDriven(Lista1).ID);
 //        System.out.println(p.evenDriven(Lista1).ID);
 //        System.out.println(p.evenDriven(Lista1).ID);
-
     }
 }

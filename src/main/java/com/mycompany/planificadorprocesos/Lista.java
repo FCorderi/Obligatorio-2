@@ -31,48 +31,49 @@ public class Lista<Proceso> implements ILista<Proceso> {
         }
     }
 
-    public void contadorDesbloqueoOrdenado(Lista<Proceso> lista, Lista<Proceso> listaAux) {
+    public void contadorDesbloqueoOrdenado(Lista<Proceso> lista, long[] vTEntreES, long[] vDuracionES) {
         Nodo<Proceso> aux = null;
-        if (primero != null) {
-            Nodo<Proceso> actual = primero;
+        Nodo<Proceso> sig = null;
+        Nodo<Proceso> actual = primero;
+
+        while (actual != null) {
             if (actual.getDato().DuracionES > 0) {
                 actual.getDato().DuracionES--;
             }
-            while (actual.getSiguiente() != null) {
+            if (actual.getDato().DuracionES == 0) {
+                actual.getDato().TEntreES = vTEntreES[(int) actual.getDato().ID - 1];
+                actual.getDato().DuracionES = vDuracionES[(int) actual.getDato().ID - 1];
+                Nodo<Proceso> nodo = new Nodo(actual.getDato().ID, actual.getDato());
+                lista.insertarOrdenado(nodo);
+                sig = actual.getSiguiente();
+                eliminar(actual.getDato().ID);
+                actual = sig;
+            } else {
                 actual = actual.getSiguiente();
-                if (actual.getDato().DuracionES > 0) {
-                    actual.getDato().DuracionES--;
-                }
-                if (actual.getDato().DuracionES == 0) {
-                    aux = listaAux.buscar(actual.getDato().ID);
-                    actual.getDato().TEntreES = aux.getDato().TEntreES;
-                    actual.getDato().DuracionES = aux.getDato().DuracionES;
-                    lista.insertarOrdenado(actual);
-                    this.eliminar(actual.getDato().ID);
-                }
             }
         }
+
     }
 
-    public void contadorDesbloqueoDesordenado(Lista<Proceso> lista, Lista<Proceso> listaAux) {
+    public void contadorDesbloqueoDesordenado(Lista<Proceso> lista, long[] vTEntreES, long[] vDuracionES) {
         Nodo<Proceso> aux = null;
-        if (primero != null) {
-            Nodo<Proceso> actual = primero;
+        Nodo<Proceso> sig = null;
+        Nodo<Proceso> actual = primero;
+
+        while (actual != null) {
             if (actual.getDato().DuracionES > 0) {
                 actual.getDato().DuracionES--;
             }
-            while (actual.getSiguiente() != null) {
+            if (actual.getDato().DuracionES == 0) {
+                actual.getDato().TEntreES = vTEntreES[(int) actual.getDato().ID - 1];
+                actual.getDato().DuracionES = vDuracionES[(int) actual.getDato().ID - 1];
+                Nodo<Proceso> nodo = new Nodo(actual.getDato().ID, actual.getDato());
+                lista.insertar(nodo);
+                sig = actual.getSiguiente();
+                eliminar(actual.getDato().ID);
+                actual = sig;
+            } else {
                 actual = actual.getSiguiente();
-                if (actual.getDato().DuracionES > 0) {
-                    actual.getDato().DuracionES--;
-                }
-                if (actual.getDato().DuracionES == 0) {
-                    aux = listaAux.buscar(actual.getDato().ID);
-                    actual.getDato().TEntreES = aux.getDato().TEntreES;
-                    actual.getDato().DuracionES = aux.getDato().DuracionES;
-                    lista.insertar(actual);
-                    this.eliminar(actual.getDato().ID);
-                }
             }
         }
     }
@@ -80,16 +81,15 @@ public class Lista<Proceso> implements ILista<Proceso> {
     @Override
     public void insertar(Nodo<Proceso> nodo) {
 
-        
+        //nodo.setSiguiente(null);
         if (esVacia()) {
             primero = nodo;
-            
+
             cantidadElementos = 1;
 
         } else {
             Nodo<Proceso> actual = primero;
             while (actual.getSiguiente() != null) {
-                System.out.println("INSERTAR");
                 actual = actual.getSiguiente();
             }
             actual.setSiguiente(nodo);
@@ -111,7 +111,7 @@ public class Lista<Proceso> implements ILista<Proceso> {
                 cantidadElementos++;
             } else {
                 actual = primero;
-                while (actual.getSiguiente() != null && actual.getSiguiente().getDato().Prioridad < nodo.getDato().Prioridad) {
+                while (actual.getSiguiente() != null && actual.getSiguiente().getDato().Prioridad <= nodo.getDato().Prioridad) {
                     actual = actual.getSiguiente();
                 }
                 aux = actual.getSiguiente();
@@ -147,7 +147,6 @@ public class Lista<Proceso> implements ILista<Proceso> {
 
         // caso especial para eliminar la cabeza de la lista encadenada
         if (primero.getEtiqueta().equals(clave)) {
-            //System.out.println("MATI DIOS TE QUEREMOS");
             Nodo<Proceso> elQueSigue = primero.getSiguiente();
             primero.setSiguiente(null);
             primero = elQueSigue;
@@ -158,7 +157,6 @@ public class Lista<Proceso> implements ILista<Proceso> {
         Nodo<Proceso> actual = primero;
         Nodo<Proceso> anterior = primero;
         while (actual != null) {
-            //System.out.println("MATI DIOS TE QUEREMOS WHILE");
             if (actual.getEtiqueta().equals(clave)) {
                 anterior.setSiguiente(actual.getSiguiente());
                 actual.setSiguiente(null);

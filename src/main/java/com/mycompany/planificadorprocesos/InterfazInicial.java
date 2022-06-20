@@ -5,6 +5,7 @@
 package com.mycompany.planificadorprocesos;
 
 import javax.swing.table.DefaultTableModel;
+import java.lang.Math;
 
 /**
  *
@@ -48,6 +49,7 @@ public class InterfazInicial extends javax.swing.JFrame {
         tipoProceso = new javax.swing.JComboBox<>();
         jSeparator1 = new javax.swing.JSeparator();
         botonAñadirVarios = new javax.swing.JButton();
+        jToggleButton1 = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -121,6 +123,13 @@ public class InterfazInicial extends javax.swing.JFrame {
             }
         });
 
+        jToggleButton1.setText("jToggleButton1");
+        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -134,7 +143,9 @@ public class InterfazInicial extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(botonAñadir)
                                 .addGap(18, 18, 18)
-                                .addComponent(botonAñadirVarios))
+                                .addComponent(botonAñadirVarios)
+                                .addGap(18, 18, 18)
+                                .addComponent(jToggleButton1))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(tipoProceso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -209,7 +220,8 @@ public class InterfazInicial extends javax.swing.JFrame {
                 .addGap(2, 2, 2)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonAñadir)
-                    .addComponent(botonAñadirVarios))
+                    .addComponent(botonAñadirVarios)
+                    .addComponent(jToggleButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -224,6 +236,20 @@ public class InterfazInicial extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private Proceso CrearProcesoRandom() {
+        String[] tipos = {"SO", "Usuario","Batch"};
+        String tipo = tipos[(int) (Math.random() * 3) ];
+        long duracion = (long)(Math.random()*10) +1;
+        long tiempoEntreES = (long)(Math.random()*10);
+        long duracionES = (long)(Math.random()*10);
+        int prioridad = (int)(Math.random()*99) +1;
+        idProceso++;
+
+        Proceso proceso = new Proceso(idProceso, tipo, duracion, tiempoEntreES, duracionES, prioridad);
+
+        return proceso;
+    }
+    
     private Proceso CrearProceso() {
         String tipo = tipoProceso.getItemAt(tipoProceso.getSelectedIndex());
         long duracion = Integer.parseInt(duracionProceso.getValue().toString());
@@ -275,6 +301,30 @@ public class InterfazInicial extends javax.swing.JFrame {
     private void botonAñadirVariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAñadirVariosActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_botonAñadirVariosActionPerformed
+
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+        Proceso proceso = CrearProcesoRandom();
+        DefaultTableModel dt = (DefaultTableModel) tablaProcesos.getModel();
+        String[] datos = {
+            String.valueOf(proceso.ID),
+            proceso.Tipo,
+            String.valueOf(proceso.Duracion),
+            String.valueOf(proceso.TEntreES),
+            String.valueOf(proceso.DuracionES),
+            String.valueOf(proceso.Prioridad),};
+        dt.addRow(datos);
+
+        Nodo nodo = new Nodo(proceso.ID, proceso);
+        if (proceso.Tipo.equals("SO")) {
+            colaProcesos1.insertarOrdenado(nodo);
+        } else if (proceso.Tipo.equals("Batch")) {
+            colaProcesos4.insertarOrdenado(nodo);
+        } else if (proceso.TEntreES > proceso.DuracionES) {
+            colaProcesos2.insertarOrdenado(nodo);
+        } else {
+            colaProcesos3.insertarOrdenado(nodo);
+        }
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -332,6 +382,7 @@ public class InterfazInicial extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JSpinner prioridadProceso;
     private javax.swing.JSpinner quantum;
     private javax.swing.JSpinner tEntreES;
