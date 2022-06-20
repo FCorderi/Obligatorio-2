@@ -1,5 +1,10 @@
 package com.mycompany.planificadorprocesos;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.*;
+import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 
 /*
@@ -22,11 +27,25 @@ public class InterfazInformacion extends javax.swing.JFrame {
         listaP3 = lista3;
         listaP4 = lista4;
         Quantum = quantum;
+        //this.getco //timer.schedule(new tarea(), 1000);
+                //timer.schedule(new tarea(), 1000, 1000);
+        timer.start();
     }
 
-    public InterfazInformacion() {
-        initComponents();
-    }
+//    class tarea extends TimerTask{
+//        public void run(){
+//            loop();
+//        }
+//    }
+
+    Timer timer = new Timer(1000, new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            loop();
+            // Aquí el código que queramos ejecutar.
+        }
+    });
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -195,10 +214,6 @@ public class InterfazInformacion extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(18, 18, 18)
-                                .addComponent(colaEjecucion, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -216,30 +231,34 @@ public class InterfazInformacion extends javax.swing.JFrame {
                                 .addGap(43, 43, 43)
                                 .addComponent(procesoEjecucionId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(60, 60, 60)
-                                .addComponent(procesoTR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(procesoTR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(18, 18, 18)
+                                .addComponent(colaEjecucion, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap(24, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addGap(55, 55, 55)
-                                .addComponent(cambiarPrioId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(bloquearProcesoId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel9))
+                        .addGap(28, 28, 28)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(bloquearProcesoId)
+                            .addComponent(cambiarPrioId))
+                        .addGap(18, 18, 18)
+                        .addComponent(cambiarPrioPrio, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(272, 272, 272))))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(194, 194, 194)
                         .addComponent(jLabel10)
-                        .addGap(71, 71, 71)
+                        .addGap(80, 80, 80)
                         .addComponent(jLabel12))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(193, 193, 193)
                         .addComponent(jLabel11)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(297, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(82, 82, 82)
                 .addComponent(jLabel5)
@@ -249,12 +268,11 @@ public class InterfazInformacion extends javax.swing.JFrame {
                         .addComponent(jLabel6)
                         .addGap(96, 96, 96)
                         .addComponent(jLabel7))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(bloquearProceso)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(cambiarPrioPrio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(60, 60, 60)
-                            .addComponent(cambiarPrioridad))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(122, 122, 122)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cambiarPrioridad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(bloquearProceso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(62, 62, 62))
         );
         layout.setVerticalGroup(
@@ -274,7 +292,7 @@ public class InterfazInformacion extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(colaEjecucion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(jLabel12))
                 .addGap(9, 9, 9)
@@ -331,21 +349,30 @@ public class InterfazInformacion extends javax.swing.JFrame {
 
     public void loop() {
         Planificadores planificador = new Planificadores(Quantum, listaP1, listaP2, listaP3, listaP4, procesosFinalizados, procesosBloqueados);
+        colaEjecucion.setText("Cola 1 (procesos del sistema)");
         while ((!listaP1.esVacia()) || (!procesosBloqueados.esVacia())) {
+
+            System.out.println("INICIO");
             Proceso p = planificador.evenDriven(listaP1);
-            procesoEjecucionId.setText(String.valueOf(p.ID));
-            procesoTR.setText(String.valueOf(p.Duracion));
-            colaEjecucion.setText("Cola 1 (procesos del sistema)");
+            if (p != null) {
+                procesoEjecucionId.setText(String.valueOf(p.ID));
+                procesoTR.setText(String.valueOf(p.Duracion));
+            }
 
             Nodo<Proceso> actual = listaP1.getPrimero();
+            DefaultTableModel dt1 = (DefaultTableModel) tablaListos.getModel();
+            int filas = dt1.getRowCount();
+            for (int i = filas - 1; i >= 0; i--) {
+                dt1.removeRow(i);
+            }
             if (actual != null) {
-                DefaultTableModel dt1 = (DefaultTableModel) tablaListos.getModel();
                 String[] datos = {
                     String.valueOf(actual.getDato().ID),
                     actual.getDato().Tipo,
                     String.valueOf(actual.getDato().Prioridad),};
                 dt1.addRow(datos);
                 while (actual.getSiguiente() != null) {
+                    System.out.println("LISTOS");
                     actual = actual.getSiguiente();
                     datos[0] = String.valueOf(actual.getDato().ID);
                     datos[1] = actual.getDato().Tipo;
@@ -355,35 +382,47 @@ public class InterfazInformacion extends javax.swing.JFrame {
             }
 
             actual = procesosBloqueados.getPrimero();
+            System.out.println(procesosBloqueados.imprimir());
             if (actual != null) {
-                DefaultTableModel dt2 = (DefaultTableModel) tablaListos.getModel();
-                String[] datos = {
+                DefaultTableModel dt2 = (DefaultTableModel) tablaBloqueados.getModel();
+                int filasb = dt2.getRowCount();
+                for (int i = filasb - 1; i >= 0; i--) {
+                    dt2.removeRow(i);
+                }
+                String[] datos1 = {
                     String.valueOf(actual.getDato().ID),
                     String.valueOf(actual.getDato().DuracionES),
                     String.valueOf(actual.getDato().Prioridad),};
-                dt2.addRow(datos);
+                dt2.addRow(datos1);
                 while (actual.getSiguiente() != null) {
+                    System.out.println("BLOQUEADOS");
                     actual = actual.getSiguiente();
-                    datos[0] = String.valueOf(actual.getDato().ID);
-                    datos[1] = String.valueOf(actual.getDato().DuracionES);
-                    datos[2] = String.valueOf(actual.getDato().Prioridad);
-                    dt2.addRow(datos);
+                    datos1[0] = String.valueOf(actual.getDato().ID);
+                    datos1[1] = String.valueOf(actual.getDato().DuracionES);
+                    datos1[2] = String.valueOf(actual.getDato().Prioridad);
+                    dt2.addRow(datos1);
                 }
             }
 
-            actual = procesosBloqueados.getPrimero();
+            actual = procesosFinalizados.getPrimero();
             if (actual != null) {
-                DefaultTableModel dt3 = (DefaultTableModel) tablaListos.getModel();
+                DefaultTableModel dt3 = (DefaultTableModel) tablaFinalizados.getModel();
+                int filasf = dt3.getRowCount();
+                for (int i = filasf - 1; i >= 0; i--) {
+                    dt3.removeRow(i);
+                }
                 String[] datos2 = {
                     String.valueOf(actual.getDato().ID),
                     actual.getDato().Tipo,};
                 dt3.addRow(datos2);
                 while (actual.getSiguiente() != null) {
+                    System.out.println("FINALIZADOS");
                     actual = actual.getSiguiente();
                     datos2[0] = String.valueOf(actual.getDato().ID);
                     datos2[1] = String.valueOf(actual.getDato().Tipo);
                     dt3.addRow(datos2);
                 }
+
             }
 
             /*
@@ -397,11 +436,13 @@ public class InterfazInformacion extends javax.swing.JFrame {
                 String.valueOf(p.Prioridad),};
             dt.addRow(datos);
              */
-            try {
-                Thread.sleep(1000);
-            } catch (Exception e) {
-            }
+//            try {
+//                Thread.sleep(10000);
+//                System.out.println("SLEEP");
+//            } catch (Exception e) {
+//            }
         }
+        //       }
         /*
         while ((!listaP2.esVacia()) || (!procesosBloqueados.esVacia())) {
             planificador.roundRobin(listaP2, 2);
@@ -424,7 +465,7 @@ public class InterfazInformacion extends javax.swing.JFrame {
             } catch (Exception e) {
             }
         }
-        */
+         */
     }
 
     /**
@@ -458,7 +499,6 @@ public class InterfazInformacion extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new InterfazInformacion().setVisible(true);
             }
         });
     }

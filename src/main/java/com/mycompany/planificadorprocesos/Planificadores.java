@@ -15,8 +15,8 @@ public class Planificadores {
     Lista<Proceso> listaP3;
     Lista<Proceso> listaP4;
     long Quantum;
-    Lista<Proceso> ProcesosFinalizados;
-    Lista<Proceso> ProcesosBloqueados = new Lista ();
+    Lista<Proceso> ProcesosFinalizados = new Lista();
+    Lista<Proceso> ProcesosBloqueados = new Lista();
 
     public Planificadores(long quantum, Lista<Proceso> lista1, Lista<Proceso> lista2, Lista<Proceso> lista3, Lista<Proceso> lista4, Lista<Proceso> procesosFinalizados, Lista<Proceso> procesosBloqueados) {
         listaP1 = lista1;
@@ -25,14 +25,14 @@ public class Planificadores {
         listaP4 = lista4;
         Quantum = quantum;
         ProcesosFinalizados = procesosFinalizados;
-        ProcesosFinalizados = procesosBloqueados;
+        ProcesosBloqueados = procesosBloqueados;
     }
 
     Lista<Proceso> copiaLista1 = listaP1;
     Lista<Proceso> copiaLista2 = listaP2;
     Lista<Proceso> copiaLista3 = listaP3;
     Lista<Proceso> copiaLista4 = listaP4;
-    
+
     int contadorEnvejecimiento = 0;
 
     Proceso procesoActivo = null;
@@ -42,6 +42,7 @@ public class Planificadores {
     long quantumCounter = Quantum;
 
     public Proceso roundRobin(Lista<Proceso> listaP, int n) {
+        if (!listaP.esVacia()){
         Proceso p = listaP.getPrimero().getDato();
         Lista<Proceso> copiaLista;
         if (n == 2) {
@@ -57,16 +58,19 @@ public class Planificadores {
 
             if (p.Duracion == 0) {
                 p.Finalizado = true;
+                //System.out.println("PRIMER IF");
                 ProcesosFinalizados.insertar(listaP.getPrimero());
                 listaP.eliminar(p.ID);
                 quantumCounter = Quantum;
             } else if (p.TEntreES == 1) {
                 p.bloqueado = true;
+                //System.out.println("SEGUNdO IF");
                 ProcesosBloqueados.insertar(listaP.getPrimero());
                 listaP.eliminar(p.ID);
                 quantumCounter = Quantum;
             } else if (quantumCounter == 0) {
                 Nodo<Proceso> nodo = new Nodo(p.ID, p);
+               // System.out.println("TERCER IF");
                 listaP.eliminar(p.ID);
                 listaP.insertar(nodo);
                 quantumCounter = Quantum;
@@ -75,37 +79,44 @@ public class Planificadores {
             quantumCounter--;
         }
         return p;
+    }return null;
     }
 
     public Proceso evenDriven(Lista<Proceso> listaP) {
-        Proceso p = listaP.getPrimero().getDato();
 
-        ProcesosBloqueados.contadorDesbloqueoOrdenado(listaP, copiaLista1);
+        if (!listaP.esVacia()) {
+            Proceso p = listaP.getPrimero().getDato();
 
-        if (p != null) {
+            ProcesosBloqueados.contadorDesbloqueoOrdenado(listaP, copiaLista1);
 
-            p.Duracion--;
-            if (p.TEntreES > 1) {
-                p.TEntreES--;
+            if (p != null) {
+
+                p.Duracion--;
+                if (p.TEntreES > 1) {
+                    p.TEntreES--;
+                }
+                if (p.Duracion == 0) {
+                    p.Finalizado = true;
+                    Nodo<Proceso> nombre = listaP.getPrimero();
+                    ProcesosFinalizados.insertar(nombre);
+                    listaP.eliminar(p.ID);
+                } else if (p.TEntreES == 1) {
+                    System.out.println("BLOQUEADO");
+                    p.bloqueado = true;
+                    ProcesosBloqueados.insertar(listaP.getPrimero());
+                    listaP.eliminar(p.ID);
+                }
+
+                contadorEnvejecimiento++;
+//                if (contadorEnvejecimiento == 2) {
+//                    contadorEnvejecimiento = 0;
+//                    listaP.bajarPrioridades();
+//                }
             }
-            if (p.Duracion == 0) {
-                p.Finalizado = true;
-                ProcesosFinalizados.insertar(listaP.getPrimero());
-                listaP.eliminar(p.ID);
-            } else if (p.TEntreES == 1) {
-                p.bloqueado = true;
-                ProcesosBloqueados.insertar(listaP.getPrimero());
-                listaP.eliminar(p.ID);
-            }
 
-            contadorEnvejecimiento++;
-            if (contadorEnvejecimiento == 2) {
-                contadorEnvejecimiento = 0;
-                listaP.bajarPrioridades();
-            }
+            return p;
         }
-
-        return p;
+        return null;
     }
 
     public Proceso firstComeFirstServed(Lista<Proceso> listaP) {

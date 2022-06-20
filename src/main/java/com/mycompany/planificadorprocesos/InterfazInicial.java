@@ -265,7 +265,7 @@ public class InterfazInicial extends javax.swing.JFrame {
         InterfazInformacion interfaz = new InterfazInformacion(Quantum, colaProcesos1, colaProcesos2, colaProcesos3, colaProcesos4);
         interfaz.setVisible(true);
         this.setVisible(false);
-        interfaz.loop();
+        //interfaz.loop();
     }//GEN-LAST:event_botonIniciarActionPerformed
 
     private void tipoProcesoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tipoProcesoActionPerformed

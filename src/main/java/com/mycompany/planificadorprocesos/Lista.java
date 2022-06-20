@@ -80,13 +80,16 @@ public class Lista<Proceso> implements ILista<Proceso> {
     @Override
     public void insertar(Nodo<Proceso> nodo) {
 
+        
         if (esVacia()) {
             primero = nodo;
+            
             cantidadElementos = 1;
 
         } else {
             Nodo<Proceso> actual = primero;
             while (actual.getSiguiente() != null) {
+                System.out.println("INSERTAR");
                 actual = actual.getSiguiente();
             }
             actual.setSiguiente(nodo);
@@ -144,7 +147,9 @@ public class Lista<Proceso> implements ILista<Proceso> {
 
         // caso especial para eliminar la cabeza de la lista encadenada
         if (primero.getEtiqueta().equals(clave)) {
+            //System.out.println("MATI DIOS TE QUEREMOS");
             Nodo<Proceso> elQueSigue = primero.getSiguiente();
+            primero.setSiguiente(null);
             primero = elQueSigue;
             cantidadElementos--;
             return true;
@@ -153,8 +158,10 @@ public class Lista<Proceso> implements ILista<Proceso> {
         Nodo<Proceso> actual = primero;
         Nodo<Proceso> anterior = primero;
         while (actual != null) {
+            //System.out.println("MATI DIOS TE QUEREMOS WHILE");
             if (actual.getEtiqueta().equals(clave)) {
                 anterior.setSiguiente(actual.getSiguiente());
+                actual.setSiguiente(null);
                 cantidadElementos--;
                 return true;
             }
@@ -195,7 +202,7 @@ public class Lista<Proceso> implements ILista<Proceso> {
 
     @Override
     public boolean esVacia() {
-        return cantidadElementos == 0;
+        return primero == null;
 
     }
 
