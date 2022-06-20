@@ -268,7 +268,7 @@
     </Container>
     <Component class="javax.swing.JButton" name="botonA&#xf1;adir">
       <Properties>
-        <Property name="text" type="java.lang.String" value="A&#xf1;adir"/>
+        <Property name="text" type="java.lang.String" value="A&#xf1;adir proceso"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonA&#xf1;adirActionPerformed"/>
@@ -320,7 +320,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="botonA&#xf1;adirVarios">
       <Properties>
-        <Property name="text" type="java.lang.String" value="A&#xf1;adir varios"/>
+        <Property name="text" type="java.lang.String" value="A&#xf1;adir varios procesos"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonA&#xf1;adirVariosActionPerformed"/>
@@ -328,7 +328,7 @@
     </Component>
     <Component class="javax.swing.JToggleButton" name="jToggleButton1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jToggleButton1"/>
+        <Property name="text" type="java.lang.String" value="A&#xf1;adir proceso aleatorio"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jToggleButton1ActionPerformed"/>

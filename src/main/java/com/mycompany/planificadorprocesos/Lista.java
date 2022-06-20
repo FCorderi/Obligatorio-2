@@ -31,6 +31,13 @@ public class Lista<Proceso> implements ILista<Proceso> {
         }
     }
 
+    public void bloquear(Nodo<Proceso> p, Lista<Proceso> lista) {
+        p.getDato().bloqueado = true;
+        Nodo<Proceso> nodo = new Nodo(p.getDato().ID, p.getDato());
+        insertar(nodo);
+        lista.eliminar(p.getDato().ID);
+    }
+
     public void contadorDesbloqueoOrdenado(Lista<Proceso> lista, long[] vTEntreES, long[] vDuracionES) {
         Nodo<Proceso> aux = null;
         Nodo<Proceso> sig = null;
@@ -44,6 +51,7 @@ public class Lista<Proceso> implements ILista<Proceso> {
                 actual.getDato().TEntreES = vTEntreES[(int) actual.getDato().ID - 1];
                 actual.getDato().DuracionES = vDuracionES[(int) actual.getDato().ID - 1];
                 Nodo<Proceso> nodo = new Nodo(actual.getDato().ID, actual.getDato());
+                nodo.getDato().bloqueado = false;
                 lista.insertarOrdenado(nodo);
                 sig = actual.getSiguiente();
                 eliminar(actual.getDato().ID);
@@ -68,6 +76,7 @@ public class Lista<Proceso> implements ILista<Proceso> {
                 actual.getDato().TEntreES = vTEntreES[(int) actual.getDato().ID - 1];
                 actual.getDato().DuracionES = vDuracionES[(int) actual.getDato().ID - 1];
                 Nodo<Proceso> nodo = new Nodo(actual.getDato().ID, actual.getDato());
+                nodo.getDato().bloqueado = false;
                 lista.insertar(nodo);
                 sig = actual.getSiguiente();
                 eliminar(actual.getDato().ID);

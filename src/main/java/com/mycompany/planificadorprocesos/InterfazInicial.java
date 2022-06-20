@@ -89,7 +89,7 @@ public class InterfazInicial extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tablaProcesos);
 
-        botonAñadir.setText("Añadir");
+        botonAñadir.setText("Añadir proceso");
         botonAñadir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonAñadirActionPerformed(evt);
@@ -116,14 +116,14 @@ public class InterfazInicial extends javax.swing.JFrame {
             }
         });
 
-        botonAñadirVarios.setText("Añadir varios");
+        botonAñadirVarios.setText("Añadir varios procesos");
         botonAñadirVarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonAñadirVariosActionPerformed(evt);
             }
         });
 
-        jToggleButton1.setText("jToggleButton1");
+        jToggleButton1.setText("Añadir proceso aleatorio");
         jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jToggleButton1ActionPerformed(evt);

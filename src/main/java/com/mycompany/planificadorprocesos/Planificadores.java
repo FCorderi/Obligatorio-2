@@ -134,7 +134,6 @@ public class Planificadores {
                     ProcesosFinalizados.insertar(nombre);
                     listaP.eliminar(p.ID);
                 } else if (p.TEntreES == 1) {
-
                     p.bloqueado = true;
                     Nodo<Proceso> nodo = new Nodo(p.ID, p);
                     ProcesosBloqueados.insertar(nodo);
